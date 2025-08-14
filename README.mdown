@@ -4,6 +4,14 @@ This [MailMate](https://freron.com/) [bundle](https://github.com/mailmate/mailma
 
 To install this bundle, copy this entire directory to `~/Library/Application Support/MailMate/Bundles/` and relaunch MailMate. Go to the preferences window and check that the bundle is installed and active.
 
+# Use
+
+This bundle provides one command, `Insert text template`, which can be activated by pressing `Ctrl-t`. 
+
+The first time the command is invoked, the user will be prompted to selected a root directory for the templates. (This directory is stored in the file `~/.texttemplate_config`, which can be deleted or edited if the user wants to change the root directory.)
+
+When the command is invoked, the user is prompted to choose a text template file (extension should be `.txt`, `.md`, or variants, such as `.text`, `.mdown`, etc.). Once 
+
 # License
 
 This software is released under the MIT license.
