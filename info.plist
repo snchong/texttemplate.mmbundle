@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>grkggrzcyngrzzohaqyr@tnwbat.pbz</string>
+	<key>contactName</key>
+	<string>Steve Chong</string>
+	<key>description</key>
+	<string>Insert text templates when composing emails.</string>
+	<key>name</key>
+	<string>TextTemplate</string>
+	<key>uuid</key>
+	<string>66544C52-2ECC-435F-B5C8-9B5F2B1CB31F</string>
+</dict>
+</plist>
