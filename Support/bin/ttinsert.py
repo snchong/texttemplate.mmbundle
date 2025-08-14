@@ -124,9 +124,17 @@ def get_template(template_root):
         pass    
     return None
 
+def replace_tags(text):
+    """Replace QuickText-style tags"""
+    # Currently we only support [[TO=firstname]] and [[TO=fullname]]
+    text = text.replace('[[TO=firstname]]', os.environ.get('MM_TO_NAME_FIRST', ''))
+    text = text.replace('[[TO=fullname]]', os.environ.get('MM_TO_NAME', ''))
+    return text
+
 if __name__ == "__main__":
     line_number = os.environ.get('MM_LINE_NUMBER')
     filepath = os.environ.get('MM_EDIT_FILEPATH')
+
     if not line_number or not filepath:
         raise ValueError("MM_LINE_NUMBER and MM_EDIT_FILEPATH must be set in the environment.")
 
@@ -136,7 +144,10 @@ if __name__ == "__main__":
     if templates_root:
         template_contents = get_template(templates_root)
         if template_contents is not None:
-            insert_text_at_line(filepath, line_number, template_contents)
+            insert_text_at_line(filepath, line_number, replace_tags(template_contents))
+            # mm_env = {k: v for k, v in os.environ.items() if k.startswith('MM_')}
+            # env_output = '\n'.join(f'{k}={v}' for k, v in mm_env.items())
+            # insert_text_at_line(filepath, line_number, env_output)
     else:
         # Give user an error message, in a GUI
         subprocess.run(["osascript", "-e", 'display dialog "Can not get a template root directory." with title "Text Template Error"buttons {"OK"} default button "OK" '])

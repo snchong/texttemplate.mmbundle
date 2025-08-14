@@ -6,11 +6,13 @@ To install this bundle, copy this entire directory to `~/Library/Application Sup
 
 # Use
 
-This bundle provides one command, `Insert text template`, which can be activated by pressing `Ctrl-t`. 
+This bundle provides one command, `Insert text template`, which can be activated by pressing `Ctrl-Shift-t`. 
 
 The first time the command is invoked, the user will be prompted to selected a root directory for the templates. (This directory is stored in the file `~/.texttemplate_config`, which can be deleted or edited if the user wants to change the root directory.)
 
-When the command is invoked, the user is prompted to choose a text template file (extension should be `.txt`, `.md`, or variants, such as `.text`, `.mdown`, etc.). Once 
+When the command is invoked, the user is prompted to choose a text template file (extension should be `.txt`, `.md`, or variants, such as `.text`, `.mdown`, etc.). The chosen template file will be inserted at the line where the cursor is.
+
+Since this bundle was written to give my wife similar functionality as the [QuickText Thunderbird Extension](https://github.com/jobisoft/quicktext/), we support replacing the tags that my wife uses, which is currently only `[[TO=firstname]]` and `[[TO=fullname]]`. That is, if you use `[[TO=firstname]]` in the template, it will be replaced with the first name of the `To` recipient. No additional tags or options are currently supported.
 
 # License
 
