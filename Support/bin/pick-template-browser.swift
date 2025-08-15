@@ -82,7 +82,7 @@ final class PreviewItem: NSObject, QLPreviewItem {
 
 // MARK: - Preview Pane
 final class PreviewPane: NSView {
-    private let placeholderLabel = NSTextField(labelWithString: "Select a file to preview")
+    private let placeholderLabel = NSTextField(labelWithString: "Select a template file to preview")
     private let scrollView = NSScrollView()
     private let textView = NSTextView()
     private var qlView: QLPreviewView?
@@ -357,6 +357,9 @@ final class BrowserPickerVC: NSViewController {
         switch event.keyCode {
         case 36: // Return
             if let url = selectedURL(), !url.isDirectoryURL { onChoose(url); return }
+        case 53: // Escape
+            view.window?.close()
+            exitCancel()
         default: break
         }
         super.keyDown(with: event)
