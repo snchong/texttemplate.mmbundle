@@ -2,7 +2,7 @@
 	name          = 'Insert text template';
 	saveForEditing = 1;
 	executionMode = 'singleMessage';
-	environment   = 'MM_TITLE=${subject.body:(no subject)}\nMM_TO=${to}\nMM_TO_NAME=${to.name}\nMM_TO_NAME_FIRST=${to.name.first}';
+	environment   = 'MM_HEADER_RECEIVED=${received}\nMM_TITLE=${subject.body:(no subject)}\nMM_TO=${to}\nMM_TO_NAME=${to.name}\nMM_TO_NAME_FIRST=${to.name.first}';
 	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/ttinsert.py" &>/dev/null &\n';
 	keyEquivalent = "@t";
 	uuid          = "D2B399E0-B3F4-476A-9364-8114E2D58A99";
