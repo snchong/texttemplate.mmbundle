@@ -239,6 +239,10 @@ final class BrowserPickerVC: NSViewController {
         browser.separatesColumns = true
         browser.target = self
         browser.action = #selector(selectionChanged)
+        browser.allowsMultipleSelection = false
+        browser.allowsEmptySelection = false
+        // Enable horizontal scrolling when columns exceed available width
+        browser.hasHorizontalScroller = true
 
         // Buttons
         chooseButton.target = self
@@ -258,11 +262,13 @@ final class BrowserPickerVC: NSViewController {
         splitView.dividerStyle = .thin
         splitView.translatesAutoresizingMaskIntoConstraints = false
 
-        // Left: browser
+        // Left: browser (NSBrowser has built-in scrolling)
         let browserContainer = NSView()
         browserContainer.translatesAutoresizingMaskIntoConstraints = false
+        
         browser.translatesAutoresizingMaskIntoConstraints = false
         browserContainer.addSubview(browser)
+        
         NSLayoutConstraint.activate([
             browser.leadingAnchor.constraint(equalTo: browserContainer.leadingAnchor),
             browser.trailingAnchor.constraint(equalTo: browserContainer.trailingAnchor),
