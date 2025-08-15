@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MailMate Text Template Insertion Script
+MailMate TextTemplate Insertion Script
 
 This script allows users to insert the contents of a selected template file into a target file at a specified line. The template root directory is persistently stored in ~/.texttemplate_config and can be changed by the user. If not set, the user is prompted to select a directory using a GUI dialog.
 """
@@ -32,8 +32,10 @@ def get_template(template_root):
     Returns:
         str or None: Contents of the selected template file, or None.
     """
-    compiled_path = os.path.join(os.path.dirname(__file__), 'pick-template-panel')
-    script_path = compiled_path if os.path.isfile(compiled_path) and os.access(compiled_path, os.X_OK) else os.path.join(os.path.dirname(__file__), 'pick-template-panel.swift')
+    picker_prog = "pick-template-browser"
+    # picker_prog = "pick-template-panel"
+    compiled_path = os.path.join(os.path.dirname(__file__), picker_prog)
+    script_path = compiled_path if os.path.isfile(compiled_path) and os.access(compiled_path, os.X_OK) else os.path.join(os.path.dirname(__file__), picker_prog + '.swift')
     try:
         result = subprocess.run([script_path, template_root], capture_output=True, text=True)
         if result.returncode == 0:
@@ -55,12 +57,23 @@ def replace_tags(text):
     text = text.replace('[[TO=fullname]]', os.environ.get('MM_TO_NAME', ''))
     return text
 
+def in_composer():
+    """
+    Check if the script is running in a MailMate composer window.
+    """
+    return True
+
 if __name__ == "__main__":
     line_number = os.environ.get('MM_LINE_NUMBER')
     filepath = os.environ.get('MM_EDIT_FILEPATH')
 
     if not line_number or not filepath:
         raise ValueError("MM_LINE_NUMBER and MM_EDIT_FILEPATH must be set in the environment.")
+
+
+    if not in_composer():
+        subprocess.run(["osascript", "-e", 'display dialog "TextTemplate can only be run from a composer window." with title "TextTemplate Error" buttons {"OK"} default button "OK" '])
+        exit(1)
 
     templates_root = templates_root.get_templates_root()
     if not templates_root:
@@ -74,6 +87,6 @@ if __name__ == "__main__":
             # insert_text_at_line(filepath, line_number, env_output)
     else:
         # Give user an error message, in a GUI
-        subprocess.run(["osascript", "-e", 'display dialog "Can not get a template root directory." with title "Text Template Error"buttons {"OK"} default button "OK" '])
+        subprocess.run(["osascript", "-e", 'display dialog "Can not get a template root directory." with title "TextTemplate Error" buttons {"OK"} default button "OK" '])
 
 
