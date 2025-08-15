@@ -61,6 +61,7 @@ def in_composer():
     """
     Check if the script is running in a MailMate composer window.
     """
+    # We don't have a great way of checking at the moment, but we will...
     return True
 
 if __name__ == "__main__":
