@@ -1,0 +1,6 @@
+{
+	name          = 'Change template directory';
+	executionMode = 'noMessages';
+	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/templates_root.py" &>/dev/null &\n';
+	uuid          = "65c63eac-20dc-4c75-9aa5-32e6b623b8d7";
+}

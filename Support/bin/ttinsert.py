@@ -6,38 +6,7 @@ This script allows users to insert the contents of a selected template file into
 """
 import os
 import subprocess
-
-def get_config_path():
-    """Returns the path to the config file storing the template root directory."""
-    return os.path.expanduser('~/.texttemplate_config')
-
-def get_templates_root():
-    """Gets the templates root directory from the config file."""
-    config_path = get_config_path()
-    if os.path.isfile(config_path):
-        with open(config_path, 'r') as f:
-            path = f.read().strip()
-            if path:
-                return path
-    return None
-
-def update_templates_root(path):
-    """Writes the templates root directory to the config file."""
-    config_path = get_config_path()
-    with open(config_path, 'w') as f:
-        f.write(path.strip() + '\n')
-
-def prompt_for_templates_root():
-    # Use pick-root.swift to select a directory
-    script_path = os.path.join(os.path.dirname(__file__), 'pick-root.swift')
-    result = subprocess.run([script_path, os.path.expanduser('~/Documents')], capture_output=True, text=True)
-    if result.returncode == 0:
-        selected_dir = result.stdout.strip()
-        if os.path.isdir(selected_dir):
-            update_templates_root(selected_dir)
-            return selected_dir
-    return None
-
+import templates_root
 
 def insert_text_at_line(filepath, line_number, text):
     """
@@ -54,52 +23,6 @@ def insert_text_at_line(filepath, line_number, text):
     with open(filepath, 'w') as f:
         f.writelines(lines)
 
-def get_config_path():
-    """
-    Returns the path to the config file storing the template root directory.
-    """
-    return os.path.expanduser('~/.texttemplate_config')
-
-def get_template_root():
-    """
-    Gets the template root directory from the config file.
-    Returns:
-        str or None: The template root path, or None if not set.
-    """
-    config_path = get_config_path()
-    if os.path.isfile(config_path):
-        with open(config_path, 'r') as f:
-            path = f.read().strip()
-            if path:
-                return path
-    return None
-
-def write_template_root(path):
-    """
-    Writes the template root directory to the config file.
-    Args:
-        path (str): Directory path to store.
-    """
-    config_path = get_config_path()
-    with open(config_path, 'w') as f:
-        f.write(path.strip() + '\n')
-
-def prompt_for_template_root():
-    """
-    Prompts the user to select a template root directory using pick-template.swift.
-    Stores the selected directory in the config file.
-    Returns:
-        str or None: The selected directory path, or None if cancelled.
-    """
-    script_path = os.path.join(os.path.dirname(__file__), 'pick-template.swift')
-    result = subprocess.run([script_path, os.path.expanduser('~')], capture_output=True, text=True)
-    if result.returncode == 0:
-        selected_dir = result.stdout.strip()
-        if os.path.isdir(selected_dir):
-            write_template_root(selected_dir)
-            return selected_dir
-    return None
-
 def get_template(template_root):
     """
     Prompts the user to select a template file from the template root directory.
@@ -109,7 +32,8 @@ def get_template(template_root):
     Returns:
         str or None: Contents of the selected template file, or None.
     """
-    script_path = os.path.join(os.path.dirname(__file__), 'pick-template.swift')
+    compiled_path = os.path.join(os.path.dirname(__file__), 'pick-template-panel')
+    script_path = compiled_path if os.path.isfile(compiled_path) and os.access(compiled_path, os.X_OK) else os.path.join(os.path.dirname(__file__), 'pick-template-panel.swift')
     try:
         result = subprocess.run([script_path, template_root], capture_output=True, text=True)
         if result.returncode == 0:
@@ -138,9 +62,9 @@ if __name__ == "__main__":
     if not line_number or not filepath:
         raise ValueError("MM_LINE_NUMBER and MM_EDIT_FILEPATH must be set in the environment.")
 
-    templates_root = get_templates_root()
+    templates_root = templates_root.get_templates_root()
     if not templates_root:
-        templates_root = prompt_for_templates_root()
+        templates_root = templates_root.prompt_for_templates_root()
     if templates_root:
         template_contents = get_template(templates_root)
         if template_contents is not None:
