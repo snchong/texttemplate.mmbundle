@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MailMate Text Template Change Root Script
+MailMate TextTemplate Change Root Script
 
 This script allows users to change the template root directory. The template root directory is persistently stored in ~/.texttemplate_config.
 """
