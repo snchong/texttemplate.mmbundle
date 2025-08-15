@@ -62,11 +62,14 @@ def in_composer():
     Check if the script is running in a MailMate composer window.
     """
     # We don't have a great way of checking at the moment, but we will...
-    return True
+    return not os.environ.get('MM_HEADER_RECEIVED')
 
 if __name__ == "__main__":
     line_number = os.environ.get('MM_LINE_NUMBER')
     filepath = os.environ.get('MM_EDIT_FILEPATH')
+    # import sys
+    # with open(os.path.join(os.getcwd(), "ttinsert.log"), "a") as log_file:
+    #     log_file.write("Header received " + str(os.environ.get('MM_HEADER_RECEIVED')) + "\n")
 
     if not line_number or not filepath:
         raise ValueError("MM_LINE_NUMBER and MM_EDIT_FILEPATH must be set in the environment.")
