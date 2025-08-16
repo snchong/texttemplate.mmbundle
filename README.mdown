@@ -1,18 +1,22 @@
-This [MailMate](https://freron.com/) [bundle](https://github.com/mailmate/mailmate_manual/wiki/Bundles) allows the user to insert text templates into emails. Use cases are for when relatively standard replies are useful.
+This [MailMate](https://freron.com/) [bundle](https://github.com/mailmate/mailmate_manual/wiki/Bundles) allows the user to insert text templates into emails. Use cases are for when relatively standard replies are useful. The text templates are simply text or markdown files in a folder hierarchy.
 
 # Installation
 
 To install this bundle, copy this entire directory to `~/Library/Application Support/MailMate/Bundles/` and relaunch MailMate. Go to the preferences window and check that the bundle is installed and active.
 
+This bundle currently relies on Python and Swift. If your machine doesn't have them installed, you should be prompted to install them the first time you run a command.
+
 # Use
 
-This bundle provides one command, `Insert text template`, which can be activated by pressing `Ctrl-Shift-t`. 
+The main command this bundle provides is `Insert text template`, which can be activated by pressing ⌘-t. 
 
-The first time the command is invoked, the user will be prompted to selected a root directory for the templates. (This directory is stored in the file `~/.texttemplate_config`, which can be deleted or edited if the user wants to change the root directory.)
+The first time the command is invoked, the user will be prompted to selected a root directory for the templates. (This directory is stored in the file `~/.texttemplate_config`.) The user can later change this directory by running the command `Change template directory`.
 
 When the command is invoked, the user is prompted to choose a text template file (extension should be `.txt`, `.md`, or variants, such as `.text`, `.mdown`, etc.). The chosen template file will be inserted at the line where the cursor is.
 
 Since this bundle was written to give my wife similar functionality as the [QuickText Thunderbird Extension](https://github.com/jobisoft/quicktext/), we support replacing the tags that my wife uses, which is currently only `[[TO=firstname]]` and `[[TO=fullname]]`. That is, if you use `[[TO=firstname]]` in the template, it will be replaced with the first name of the `To` recipient. No additional tags or options are currently supported.
+
+The UI for this bundle is implemented as a Swift script. It probably runs pretty slowly. You can compile it by running the command `Compile scripts`, which invokes `swiftc` to compile the Swift script. After doing this, you may notice it runs faster.
 
 # License
 

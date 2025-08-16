@@ -1,0 +1,6 @@
+{
+	name          = 'Compile scripts';
+	executionMode = 'noMessages';
+	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/compile.sh" &>/dev/null &\n';
+	uuid          = "b2998c64-b953-4617-8187-a4ed5a448561";
+}
