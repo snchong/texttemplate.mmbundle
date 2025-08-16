@@ -1,5 +1,5 @@
 {
-	name          = 'Insert text template';
+	name          = ' Insert text template';
 	saveForEditing = 1;
 	executionMode = 'singleMessage';
 	environment   = 'MM_HEADER_RECEIVED=${received}\nMM_TITLE=${subject.body:(no subject)}\nMM_TO=${to}\nMM_TO_NAME=${to.name}\nMM_TO_NAME_FIRST=${to.name.first}';
